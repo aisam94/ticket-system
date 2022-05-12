@@ -5,10 +5,10 @@ const Header = () => {
   return (
     <header className="header">
       <Link href="/counter">
-        <a href="#">Counter Management</a>
+        <a>Counter Management</a>
       </Link>
       <Link href="/customer">
-        <a href="#">Customer View</a>
+        <a>Customer View</a>
       </Link>
     </header>
   );

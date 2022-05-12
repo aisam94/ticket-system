@@ -70,6 +70,10 @@ main {
   background-color: red;
 }
 
+.gray-btn {
+  background-color: gray;
+}
+
 .customer-counter-container {
   display: flex;
   width: 100%;
@@ -82,9 +86,16 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: antiquewhite;
   border: 1px solid black;
   padding: 1rem;
+}
+
+.yellow-card {
+  background-color: antiquewhite;
+}
+
+.gray-card {
+  background-color: lightgray;
 }
 
 .customer-counter-header {

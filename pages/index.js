@@ -11,7 +11,7 @@ export default function Home() {
       </Head>
 
       <main className="">
-        <h1 className="">Welcome to Ticket System!</h1>
+        <h1 className="">Welcome to Ticket System.</h1>
       </main>
     </div>
   );
