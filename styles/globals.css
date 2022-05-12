@@ -25,6 +25,10 @@ a {
   padding: 1rem;
 }
 
+.title {
+  text-align: center;
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -39,12 +43,15 @@ main {
   margin-top: 2rem;
 }
 
+/* Counter Management */
+
 .counter-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: lightcyan;
   border: 1px solid black;
+  border-radius: 5px;
   padding: 1em;
 }
 
@@ -56,21 +63,40 @@ main {
   width: 100%;
 }
 
-.serving-btn {
+/* Customer View */
+
+.status-btn {
   border: none;
   border-radius: 50%;
   padding: 10px;
 }
 
-.green-btn {
+.customer-status-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: pink;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 15rem;
+  margin: auto;
+  margin-top: 1rem;
+}
+
+.customer-status-container > * {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.green-status {
   background-color: green;
 }
 
-.red-btn {
+.red-status {
   background-color: red;
 }
 
-.gray-btn {
+.gray-status {
   background-color: gray;
 }
 
@@ -79,7 +105,7 @@ main {
   width: 100%;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  margin-top: 1em;
+  margin-top: 4rem;
 }
 
 .customer-counter-card {
@@ -87,6 +113,7 @@ main {
   flex-direction: column;
   align-items: center;
   border: 1px solid black;
+  border-radius: 5px;
   padding: 1rem;
 }
 
@@ -106,18 +133,17 @@ main {
   margin: 0 0.5em 0 0.5em;
 }
 
-.customer-status-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: pink;
-  border: 1px solid black;
-  width: 15rem;
-  margin: auto;
-  margin-top: 1rem;
-}
-
-.customer-status-container > * {
-  margin-bottom: 0.5rem;
-  margin-top: 0.5rem;
+.btn {
+  background-color: #ffffff;
+  color: black;
+  border: 1px solid gray;
+  border-radius: 0.5rem;
+  padding: 5px;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  font-size: 0.8rem;
+  font-weight: 300;
+  margin: 0.5em;
+  padding: 10px;
+  text-decoration: none;
 }

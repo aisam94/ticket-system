@@ -6,11 +6,11 @@ import { db } from "../firebase";
 import { useDocument } from "react-firebase-hooks/firestore";
 
 const CounterMgmt = () => {
-  //get ticket list queue
+  //queue ref
   const queueRef = doc(db, "ticket", "queue");
-  const [ticketSnapshot] = useDocument(queueRef);
-  const ticketData = ticketSnapshot ? ticketSnapshot.data() : [];
-  const ticketArr = ticketData.queue;
+  const [queueSnapshot] = useDocument(queueRef);
+  const queueData = queueSnapshot ? queueSnapshot.data() : [];
+  const queueArr = queueData.queue;
 
   //counter ref
   const counterRef = doc(db, "ticket", "counter");
@@ -19,8 +19,8 @@ const CounterMgmt = () => {
 
   return (
     <main>
-      <h1>COUNTER MANAGEMENT</h1>
-      {ticketArr && ticketArr.length === 0 && (
+      <h1 className="title">COUNTER MANAGEMENT</h1>
+      {queueArr && queueArr.length === 0 && (
         <div> No tickets in the waiting queue</div>
       )}
       <div className="counter-container">

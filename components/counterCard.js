@@ -11,13 +11,13 @@ const CounterCard = ({ counter }) => {
   const counterData = counterSnapshot ? counterSnapshot.data() : [];
   const counterArr = counterData.counters;
 
-  //get ticket list queue
+  //queue ref
   const queueRef = doc(db, "ticket", "queue");
-  const [ticketSnapshot] = useDocument(queueRef);
-  const ticketData = ticketSnapshot ? ticketSnapshot.data() : [];
-  const ticketArr = ticketData.queue;
+  const [queueSnapshot] = useDocument(queueRef);
+  const queueData = queueSnapshot ? queueSnapshot.data() : [];
+  const queueArr = queueData.queue;
 
-  //serving queue
+  //serving ref
   const servingRef = doc(db, "ticket", "serving");
   const [servingSnapshot] = useDocument(servingRef);
   const servingData = servingSnapshot ? servingSnapshot.data() : [];
@@ -27,9 +27,7 @@ const CounterCard = ({ counter }) => {
   const [isOnline, setIsOnline] = useState(counter.isOnline);
   const toggleOnline = () => {
     setIsOnline(!isOnline);
-
-    // counter.isOnline = isOnline;
-    const newCounters = counterData.counters.map((obj) => {
+    const newCounters = counterArr.map((obj) => {
       if (obj.number === counter.number) {
         return { ...obj, isOnline: !counter.isOnline };
       }
@@ -38,27 +36,29 @@ const CounterCard = ({ counter }) => {
     setDoc(counterRef, { counters: newCounters }, { merge: true });
   };
 
-  //call next function
+  //call next
   const callNext = () => {
+    //only call if online, queue not empty, and not serving anyone
     if (
       counter.isOnline &&
-      ticketArr.length > 0 &&
+      queueArr.length > 0 &&
       counter.currentTicket === null
     ) {
-      ticketArr[0].isServing = true;
-      ticketArr[0].isWaiting = false;
+      queueArr[0].isServing = true;
+      queueArr[0].isWaiting = false;
 
+      //take the next ticket in queue to counter
       const newCounters = counterData.counters.map((obj) => {
         if (obj.number === counter.number) {
-          return { ...obj, currentTicket: ticketArr[0].ticketNumber };
+          return { ...obj, currentTicket: queueArr[0].ticketNumber };
         }
         return obj;
       });
       setDoc(counterRef, { counters: newCounters });
 
-      //remove from queue and add to serving
-      setDoc(servingRef, { counter: [...servingData.counter, ticketArr[0]] });
-      const newTicketArr = ticketArr.slice(1);
+      //remove ticket from queue and add to serving
+      setDoc(servingRef, { counter: [...servingData.counter, queueArr[0]] });
+      const newTicketArr = queueArr.slice(1);
       setDoc(queueRef, { queue: newTicketArr });
     }
   };
@@ -90,12 +90,21 @@ const CounterCard = ({ counter }) => {
     <div className="counter-card">
       <div>Counter {counter.number}</div>
       {isOnline ? (
-        <button onClick={toggleOnline}> Go Offline</button>
+        <button className="btn" onClick={toggleOnline}>
+          {" "}
+          Go Offline
+        </button>
       ) : (
-        <button onClick={toggleOnline}>Go Online</button>
+        <button className="btn" onClick={toggleOnline}>
+          Go Online
+        </button>
       )}
-      <button onClick={completeCurrent}>Complete Current</button>
-      <button onClick={callNext}>Call Next</button>
+      <button className="btn" onClick={completeCurrent}>
+        Complete Current
+      </button>
+      <button className="btn" onClick={callNext}>
+        Call Next
+      </button>
     </div>
   );
 };

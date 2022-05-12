@@ -6,17 +6,17 @@ const CustomerCounter = ({ counter }) => {
   let online = counter.isOnline;
 
   const cardColor = online ? "yellow-card" : "gray-card";
-  const btnColor = online
+  const statusColor = online
     ? currentTicketNum
-      ? "red-btn"
-      : "green-btn"
-    : "gray-btn";
+      ? "red-status"
+      : "green-status"
+    : "gray-status";
 
   return (
     <div className={`customer-counter-card ${cardColor} }`}>
       <div className="customer-counter-header">
         <div>Counter {counterNum}</div>
-        <button className={`serving-btn ${btnColor} `}></button>
+        <button className={`status-btn ${statusColor} `}></button>
       </div>
       {online ? <div>{currentTicketNum}</div> : <div>Offline</div>}
     </div>

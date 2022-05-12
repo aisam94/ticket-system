@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import CustomerCounter from "../components/customerCounter";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
@@ -6,25 +6,23 @@ import { nanoid } from "nanoid";
 import { useDocument } from "react-firebase-hooks/firestore";
 
 const CustomerView = () => {
-  //get ticket list queue
+  //queue ref
   const queueRef = doc(db, "ticket", "queue");
-  const [ticketSnapshot] = useDocument(queueRef);
-  const ticketData = ticketSnapshot ? ticketSnapshot.data() : [];
-  const ticketArr = ticketData.queue;
+  const [queueSnapshot] = useDocument(queueRef);
+  const queueData = queueSnapshot ? queueSnapshot.data() : [];
+  const queueArr = queueData.queue;
 
   //counter ref
   const counterRef = doc(db, "ticket", "counter");
   const [counterSnapshot] = useDocument(counterRef);
   const counterData = counterSnapshot ? counterSnapshot.data() : [];
-  // const counterArr = counterData.counters;
 
-  //get current ticket count
-  let currentCount;
+  //ticket count ref
   const countRef = doc(db, "ticket", "count");
   const [countSnapshot] = useDocument(countRef);
-  currentCount = countSnapshot ? countSnapshot.data().count : 1;
+  let currentCount = countSnapshot ? countSnapshot.data().count : 1;
 
-  //serving queue
+  //serving ref
   const servingRef = doc(db, "ticket", "serving");
   const [servingSnapshot] = useDocument(servingRef);
   const servingData = servingSnapshot ? servingSnapshot.data() : [];
@@ -40,7 +38,7 @@ const CustomerView = () => {
   };
 
   const addTicket = () => {
-    setDoc(queueRef, { queue: [...ticketArr, newTicket] }, { merge: true });
+    setDoc(queueRef, { queue: [...queueArr, newTicket] }, { merge: true });
     setDoc(countRef, { count: currentCount + 1 }, { merge: true });
   };
 
@@ -55,12 +53,13 @@ const CustomerView = () => {
 
   return (
     <main>
-      <h1>CUSTOMER VIEW</h1>
-
+      <h1 className="title">CUSTOMER VIEW</h1>
       <div className="customer-status-container">
         <div>Now Serving: {latestServingNum()}</div>
         <div>Last Number: {latestIssuedNum}</div>
-        <button onClick={addTicket}>Take a Number</button>
+        <button className="btn" onClick={addTicket}>
+          Take a Number
+        </button>
       </div>
 
       <div className="customer-counter-container">
